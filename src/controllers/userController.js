@@ -12,6 +12,7 @@ const { jwtActivationKey } = require("../secret");
 const { successResponse, errorResponse } = require("./responseController");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const millisecondsToHours = require('date-fns/millisecondsToHours')
 
 //Create New User:
 const createUser = async(req, res, next) => {
@@ -67,29 +68,30 @@ const userLogin = async(req, res, next) => {
                 errorResponse(res, {
                     statusCode: 400,
                     message: "User not valid. Please, contact to admin"
-            })
-        }
-        const isMatch = await bcrypt.compare( password,hasUser.password );
-         if(!isMatch){
-            errorResponse(res, {
-                statusCode: 400,
-                message: 'Invalid Credentials'
-            })
+                })
+            } else {
+                const isMatch = await bcrypt.compare( password,hasUser.password );
+                if(!isMatch){
+                    errorResponse(res, {
+                        statusCode: 400,
+                        message: 'Invalid Credentials'
+                })
          } else {
-             console.log(email, password);
-            //create json web token:
-            const expire = 24 * 60 * 60 * 1000;
-            const token = createJSONWebToken({ email, password }, jwtActivationKey, expire);
-            res.cookie("jwtoken", token, {
-                expires: new Date(Date.now() + 25892000000),
-                httpOnly: true
-            }); 
-             successResponse(res, {
-                 statusCode: 200,
-                 message: 'Login successful',
-                 payload: {token}
-            })
-        }
+                //create json web token:
+                const expire = 24 * 60 * 60 * 1000;
+                const token = createJSONWebToken({ email, password }, jwtActivationKey, expire);
+                res.cookie("jwtoken", token, {
+                    expires: new Date(Date.now() + 25892000000),
+                    httpOnly: true
+                }); 
+                successResponse(res, {
+                    statusCode: 200,
+                    message: 'Login successful',
+                    payload: {token}
+                })
+            }
+        } 
+        
     }
     } catch (error) {
         next(error)
@@ -101,7 +103,6 @@ const getUserProfile = async(req, res, next) => {
     const { token } = req.headers;
     const decoded = jwt.verify(token, jwtActivationKey);
     
-    console.log(decoded);
     //get user by email:
     const user = await User.findOne({ email: decoded.email });
 
@@ -135,6 +136,7 @@ const requestForSerial = async (req, res, next) => {
         if (lastSerial[date]) {
             let lastItem = Object.keys(Object.values(lastSerial)[0]);
 
+            
             if (lastSerial[date][parseInt(lastItem[lastItem.length - 1])].serial_status === 'pending' || lastSerial[date][parseInt(lastItem[lastItem.length - 1])].serial_status === 'in-progress') {
                 errorResponse(res, {
                     statusCode: 409,
@@ -144,6 +146,10 @@ const requestForSerial = async (req, res, next) => {
                 lastItem = parseInt(lastItem[lastItem.length - 1]) + 1;
     
                 lastSerial[date][lastItem] = {
+                    driver: user.name,
+                    reg_number: user.reg_number,
+                    license_number: user.license_number,
+                    serial_time: Date.now(),
                     origin,
                     destination,
                     start: '',
@@ -160,7 +166,11 @@ const requestForSerial = async (req, res, next) => {
         } else {
             let newSerial = {
             [date]: {
-                1: {
+                    1: {
+                    driver: user.name,
+                    reg_number: user.reg_number,
+                    license_number: user.license_number,
+                    serial_time: Date.now(),
                     origin,
                     destination,
                     start: '',
@@ -182,6 +192,10 @@ const requestForSerial = async (req, res, next) => {
         let newSerial = {
             [date]: {
                 1: {
+                    driver: user.name,
+                    reg_number: user.reg_number,
+                    license_number: user.license_number,
+                    serial_time: Date.now(),
                     origin,
                     destination,
                     start: '',
@@ -233,14 +247,48 @@ const getSerialHistory = async(req, res, next) => {
     }
 }
 //GET: Serial History (All) :
-const getAllSerialHistory = (req, res, next) => {
-    const allUser = User.find({});
+const getAllSerialHistory = async(req, res, next) => {
+    const allUser = await User.find({});
 
-    console.log(allUser);
+    const allSerial = [];
+
+    //get all user's serial history array:
+    for (let i = 0; i < Object.keys(allUser).length; i++){
+        allSerial.push({...allUser[i].serial});
+    }
+
+    //get current date array:
+    const currentDate = new Date().toLocaleDateString();
+
+    let currentUserArray = [];
+
+    //get today's serial:
+    allSerial.forEach(item => {
+        let dateKeys = [];
+       
+        for (let j = 0; j < Object.keys(item).length; j++){
+            dateKeys.push(Object.keys(item[j])[0]);
+        }
+        
+        if (Object.values(item).filter(lastSearch => lastSearch[currentDate]).length > 0) {
+            currentUserArray.push(Object.values(item).filter(lastSearch => lastSearch[currentDate])[0][currentDate])
+        }
+    })
+
+    //findout the pending users:
+    const pendingUser = [];
+    currentUserArray.forEach(item => {
+        const serialValues = Object.values(item);
+        const pendingSerial = serialValues.filter(value => value.serial_status === 'pending');
+
+        pendingUser.push(...pendingSerial);
+    });
+    //sort serial array based on time:
+    pendingUser.sort((a, b) => parseInt(a.serial_time) - parseInt(b.serial_time));
     successResponse(res, {
         statusCode: 200,
         message: 'All users serial gathered successfully',
-        payload: allUser
+        payload: pendingUser,
     })
 }
 
