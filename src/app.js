@@ -11,11 +11,11 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
-const xssClean = require('xss-clean');
 const rateLimit = require('express-rate-limit');
 const userRouter = require('./routers/userRouter');
 const { errorResponse } = require('./controllers/responseController');
 const cookieParser = require('cookie-parser');
+const adminRouter = require('./routers/adminRouter');
 
 
 const app = express();
@@ -31,11 +31,9 @@ app.use(morgan('dev'));
 //2. BodyParser - use to parse body:
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//3. xss-clean -  use to secure routes:
-app.use(xssClean());
-//4. express-rate-limit - limit request from an IP:
+//3. express-rate-limit - limit request from an IP:
 app.use(rateLimiter);
-//5. Cookie-parser  - handle cookies:
+//4. Cookie-parser  - handle cookies:
 // app.use(cookieParser);
 
 
@@ -43,6 +41,9 @@ app.use(rateLimiter);
 
 //User router:
 app.use('/api/users', userRouter);
+
+//admin Router:
+app.use('/api/admin', adminRouter);
 
 
 //client error handling:

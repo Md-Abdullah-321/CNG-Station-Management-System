@@ -60,9 +60,10 @@ const userSchema = new Schema({
         trim: true,
         unique: true,
     },
-    image: {
-        type: String,
-        default: defaultImagePath
+   image: {
+        type: Buffer,
+        contentType: String,
+        required: [true, 'User image is required']
     },
     password: {
         type: String,

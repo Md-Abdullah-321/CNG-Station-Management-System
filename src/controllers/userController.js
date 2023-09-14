@@ -12,13 +12,24 @@ const { jwtActivationKey } = require("../secret");
 const { successResponse, errorResponse } = require("./responseController");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const millisecondsToHours = require('date-fns/millisecondsToHours')
+const createError = require('http-errors');
 
 //Create New User:
 const createUser = async(req, res, next) => {
-    const { name, email, phone, reg_number, license_number, image, password, address} = req.body;
+    const { name, email, phone, reg_number, license_number, password, address} = req.body;
+    const image = req.file;
+    if (!image) {
+        throw createError(400, 'image file is required');
+    }
+         
+    if (image.size > 1024 * 1024 * 2) {
+        throw createError(400, 'File is too large')
+    }
+         
+    const imageBufferString = image.buffer.toString('base64');
+
     const user = {
-        name, email, phone, reg_number, license_number, image, password, address
+        name, email, phone, reg_number, license_number, password, address, image: imageBufferString
     }
 
     const hasEmail = await User.exists({ email: email })
@@ -28,10 +39,11 @@ const createUser = async(req, res, next) => {
     if (hasEmail || hasReg || hasPhone) {
         errorResponse(res, {
             statusCode: 401,
-            message: "Invalid Credentials"
+            message: "User already exist, please login"
         })
     }
 
+    
     //if any field is empty, return error:
     if (!name || !email || !phone || !reg_number || !license_number || !password || !address) {
         errorResponse(res, {
@@ -55,6 +67,7 @@ const createUser = async(req, res, next) => {
 const userLogin = async(req, res, next) => {
     try {
         const { email, password } = req.body;
+        console.log(email, password);
         if(!email || !password){
             errorResponse(res, {
                 statusCode: 400,
@@ -302,7 +315,7 @@ const userLogout = (res, req, next) => {
             message: 'Logout successfull'
         })
     } catch (error) {
-        console.error(error);
+        next(error);
     }
 }
 module.exports = {
