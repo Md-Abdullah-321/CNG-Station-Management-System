@@ -9,17 +9,27 @@
 //Dependencies:
 const express = require('express');
 const adminRouter = express.Router();
+const upload = require('../middlewares/uploadFile');
+const { createAdmin, adminLogin, banUser, approveUser } = require('../controllers/adminController');
 
 
 //POST: Create new admin:
-adminRouter.post('/create', (req, res) => {
-    res.send('I am admin registration');
-});
+adminRouter.post('/create',upload.single('image') ,createAdmin);
+
+
+//POST: login as admin:
+adminRouter.post('/login', adminLogin);
+
+//PUT: Approved account:
+adminRouter.put('/approve/:id', approveUser)
 
 //PUT: Banned account:
-adminRouter.put('/:id', (req,res) => {
-    res.send("Acoount banned");
-})
+adminRouter.put('/restricted/:id', banUser)
+
+//GET: Show all pending user:
+adminRouter.get('/pending', (req, res) => {
+    res.send("Show all pending User.")
+});
 
 //GET: show all cng:
 adminRouter.get('/users', (req, res) => {

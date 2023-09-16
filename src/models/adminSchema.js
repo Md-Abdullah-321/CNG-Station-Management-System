@@ -1,20 +1,16 @@
 /*
-title: User Schema.
-description: User Schema for Creating new user.
-author: MD Abdullah
-date: 04/09/2023
-*/
+ * Title: Admin Schema. 
+ * Description: Admin Schema to create new admin.
+ * Author: Md Abdullah
+ * Date: 09/16/23
+ */
 
 
 //Dependencies:
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-
-//Date: 
-const date = new Date().toLocaleString();
-
-const userSchema = new Schema({
+const adminSchema = new Schema({
     name: {
         type: String,
         required: [true, 'User name is required'],
@@ -47,19 +43,7 @@ const userSchema = new Schema({
             message: 'Please enter a valid phone number'
         }
     },
-    reg_number: {
-        type: String,
-        required: [true, 'Registration number is require'],
-        trim: true,
-        unique: true,
-    },
-    license_number: {
-        type: String,
-        required: [true, 'License number is require'],
-        trim: true,
-        unique: true,
-    },
-   image: {
+    image: {
         type: Buffer,
         contentType: String,
         required: [true, 'User image is required']
@@ -74,16 +58,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'User address is required']
     },
-    accountType: {
-        type: String,
-        default: 'pending',
-    },
-    date: {
-        type: Date,
-        default: date
-    },
-    serial: []
 }, { timestamps: true });
 
-const User = model('Users', userSchema);
-module.exports = User;
+const Admin = model('Admins', adminSchema);
+module.exports = Admin;

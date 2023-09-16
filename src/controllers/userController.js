@@ -1,9 +1,9 @@
 /*
-title: User Controller.
-description: Controlling user router's middleware.
-author: MD Abdullah
-date: 04/09/2023
-*/
+ * Title: User Controller. 
+ * Description: Controlling user router's middlewares.
+ * Author: Md Abdullah
+ * Date: 09/04/23
+ */
 
 //Dependencies:
 const { createJSONWebToken } = require("../../helper/createJSONWebToken");
@@ -67,7 +67,7 @@ const createUser = async(req, res, next) => {
 const userLogin = async(req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password);
+        
         if(!email || !password){
             errorResponse(res, {
                 statusCode: 400,
@@ -77,7 +77,7 @@ const userLogin = async(req, res, next) => {
         
         const hasUser = await User.findOne({ email: email });
         if (hasUser) {
-            if (hasUser.accountType === 'pending' || hasUser.accountType === 'blocked') {
+            if (hasUser.accountType === 'pending' || hasUser.accountType === 'banned') {
                 errorResponse(res, {
                     statusCode: 400,
                     message: "User not valid. Please, contact to admin"
@@ -220,7 +220,8 @@ const requestForSerial = async (req, res, next) => {
 
         serial[0] = newSerial;
 
-        await User.updateOne({ _id: user._id }, { $set: { serial: serial } });
+        await User.updateOne({ _id: user._id },
+            { $set: { serial: serial } });
 
         successResponse(res, {
             statusCode: 201,

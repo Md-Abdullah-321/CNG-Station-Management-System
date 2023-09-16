@@ -18,6 +18,7 @@ const cookieParser = require('cookie-parser');
 const adminRouter = require('./routers/adminRouter');
 
 
+
 const app = express();
 const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 Minute
@@ -29,12 +30,13 @@ const rateLimiter = rateLimit({
 //1. Morgan - use to see the requiest type:
 app.use(morgan('dev'));
 //2. BodyParser - use to parse body:
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //3. express-rate-limit - limit request from an IP:
 app.use(rateLimiter);
 //4. Cookie-parser  - handle cookies:
-// app.use(cookieParser);
+app.use(cookieParser());
+
 
 
 
