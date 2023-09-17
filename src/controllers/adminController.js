@@ -130,6 +130,7 @@ const adminLogin = async (req, res) => {
 }
 
 
+//PUT: Approved an user ->
 const approveUser = async (req, res,next) => {
     const {id} = req.params;
 
@@ -151,6 +152,7 @@ const approveUser = async (req, res,next) => {
     
 }
 
+//PUT: Ban a single user ->
 const banUser = async (req, res,next) => {
     const {id} = req.params;
 
@@ -172,9 +174,47 @@ const banUser = async (req, res,next) => {
     
 }
 
+
+//GET: get all pending users ->
+const getPendingUsers = async(_, res, next) => {
+    try {
+        
+        const options = { serial: 0, password: 0 };
+        const users = await User.find({accountType: 'pending'},options);
+
+        successResponse(res, {
+            statusCode: 200,
+            message: "Pendin users collected successfully.",
+            payload: users
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//GET: get all users -> 
+const getAllUsers = async (_, res, next) => {
+     try {
+        const users = await User.find({});
+
+        successResponse(res, {
+            statusCode: 200,
+            message: "Pendin users collected successfully.",
+            payload: users
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
 module.exports = {
     createAdmin,
     adminLogin,
     banUser,
     approveUser,
+    getPendingUsers,
+    getAllUsers,
 }

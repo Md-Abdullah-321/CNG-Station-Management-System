@@ -10,7 +10,7 @@
 const express = require('express');
 const adminRouter = express.Router();
 const upload = require('../middlewares/uploadFile');
-const { createAdmin, adminLogin, banUser, approveUser } = require('../controllers/adminController');
+const { createAdmin, adminLogin, banUser, approveUser, getPendingUsers, getAllUsers } = require('../controllers/adminController');
 
 
 //POST: Create new admin:
@@ -27,19 +27,12 @@ adminRouter.put('/approve/:id', approveUser)
 adminRouter.put('/restricted/:id', banUser)
 
 //GET: Show all pending user:
-adminRouter.get('/pending', (req, res) => {
-    res.send("Show all pending User.")
-});
+adminRouter.get('/pending', getPendingUsers);
 
 //GET: show all cng:
-adminRouter.get('/users', (req, res) => {
-    res.send("Total CNG with some info.")
-});
+adminRouter.get('/users', getAllUsers);
 
-//GET: CNG info by ID:
-adminRouter.get('/:id', (req, res) => {
-    res.send("CNG details with serial history");
-})
+// TODO: Add search Option. 
 
 
 
