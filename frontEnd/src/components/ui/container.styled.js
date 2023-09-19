@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const RegistrationContainer = styled.div`
+export const FormBackgroundContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: #9EB384;
+    background-color: #C8E4B2;
     font-family: 'Poppins', sans-serif;
 `

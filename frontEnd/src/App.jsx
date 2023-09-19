@@ -1,4 +1,4 @@
-import Registration from "./components/shared/Registration";
+import Registration from "./components/users/registration";
 
 function App() {
   return (
