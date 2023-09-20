@@ -58,7 +58,6 @@ export const Button = styled.button`
     background-color: #C8E4B2;
     color: #406343;
     border: none;
-    margin: 0.5rem;
     padding: 5px 15px;
     border-radius: 5px;
     font-weight: 600;
@@ -66,4 +65,9 @@ export const Button = styled.button`
 
 export const InputFile = styled.input`
     margin: 0.7rem 0rem 0rem 0.5rem;
+`
+
+export const P = styled.p`
+    font-size: 14px;
+    margin-right: 17px;
 `

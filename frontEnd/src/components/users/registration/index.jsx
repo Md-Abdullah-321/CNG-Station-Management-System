@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import InputGroup from "../../shared/inputGroup";
 import {
@@ -7,8 +8,12 @@ import {
   FormContainer,
   Heading,
   InputFile,
+  P,
 } from "../../ui/component.styled";
-import { FormBackgroundContainer } from "../../ui/container.styled";
+import {
+  ButtonFlexContainer,
+  FormBackgroundContainer,
+} from "../../ui/container.styled";
 
 const init = {
   name: "",
@@ -167,9 +172,17 @@ function Registration() {
               onBlur={handleBlur}
             />
 
-            <Button type="submit" onClick={clear}>
-              Submit
-            </Button>
+            <ButtonFlexContainer>
+              <Button type="submit" onClick={clear}>
+                {" "}
+                Submit{" "}
+              </Button>
+
+              <P>
+                Already have an account? please{" "}
+                <NavLink to="/login">Login</NavLink>
+              </P>
+            </ButtonFlexContainer>
           </Form>
         </FormContainer>
       </FlexContainer>

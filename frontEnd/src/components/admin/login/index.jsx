@@ -1,0 +1,105 @@
+import { NavLink } from "react-router-dom";
+import useForm from "../../hooks/useForm";
+import InputGroup from "../../shared/inputGroup";
+import {
+  Button,
+  FlexContainer,
+  Form,
+  FormContainer,
+  Heading,
+  P,
+} from "../../ui/component.styled";
+import {
+  ButtonFlexContainer,
+  FormBackgroundContainer,
+} from "../../ui/container.styled";
+
+const init = {
+  email: "",
+  password: "",
+};
+
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = "Email is Required";
+  }
+
+  if (!values.password) {
+    errors.password = "Password is Required";
+  } else if (values.password.length < 6) {
+    errors.password = "Password length must be 6 character";
+  }
+
+  return errors;
+};
+
+function AdminLogin() {
+  const {
+    formState: state,
+    handleBlur,
+    handleChange,
+    handleFocus,
+    handleSubmit,
+    clear,
+  } = useForm({ init, validate });
+
+  const cb = ({ hasError, values, errors }) => {
+    if (hasError) {
+      alert("[ERROR]" + " Please, fill all the input field");
+    } else {
+      alert("[SUCCESS]" + " User created successfully");
+    }
+  };
+
+  console.log(state);
+  return (
+    <FormBackgroundContainer>
+      <FlexContainer>
+        <FormContainer>
+          <Form onSubmit={(e) => handleSubmit(e, cb)}>
+            <Heading>Admin Login Form</Heading>
+
+            <InputGroup
+              label="Email"
+              name="email"
+              placeholder="Enter your email"
+              value={state.email.value}
+              type="email"
+              error={state.email.error}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+
+            <InputGroup
+              label="Password"
+              name="password"
+              placeholder="Enter your password"
+              value={state.password.value}
+              type="password"
+              error={state.password.error}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+
+            <ButtonFlexContainer>
+              <Button type="submit" onClick={clear}>
+                {" "}
+                Submit{" "}
+              </Button>
+
+              <P>
+                Log as <NavLink to="/login">User</NavLink>
+              </P>
+            </ButtonFlexContainer>
+          </Form>
+        </FormContainer>
+      </FlexContainer>
+    </FormBackgroundContainer>
+  );
+}
+
+export default AdminLogin;

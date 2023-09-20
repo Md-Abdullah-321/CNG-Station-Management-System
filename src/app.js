@@ -16,6 +16,8 @@ const userRouter = require('./routers/userRouter');
 const { errorResponse } = require('./controllers/responseController');
 const cookieParser = require('cookie-parser');
 const adminRouter = require('./routers/adminRouter');
+const cors = require("cors");
+const path = require('path');
 
 
 
@@ -30,14 +32,28 @@ const rateLimiter = rateLimit({
 //1. Morgan - use to see the requiest type:
 app.use(morgan('dev'));
 //2. BodyParser - use to parse body:
-// app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 //3. express-rate-limit - limit request from an IP:
 app.use(rateLimiter);
 //4. Cookie-parser  - handle cookies:
 app.use(cookieParser());
+//5. cors:
+app.use(cors());
 
 
+
+//serve Client:
+app.use(express.static(path.join(__dirname,"..", "/frontEnd/dist")));
+
+app.get("*", (req, res) => {
+    res.sendFile(
+        path.join(__dirname,"..", '/frontEnd/dist/index.html'),
+        function(err) {
+            res.status(500).send(err)
+        }
+    )
+})
 
 
 

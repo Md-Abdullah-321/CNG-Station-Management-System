@@ -66,7 +66,6 @@ const useForm = ({ init, validate }) => {
   const handleSubmit = (e, cb) => {
     e.preventDefault();
     const { errors, hasError, values } = getErrors();
-
     cb({
       hasError,
       errors,
