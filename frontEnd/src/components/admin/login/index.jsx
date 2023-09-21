@@ -13,6 +13,7 @@ import {
   ButtonFlexContainer,
   FormBackgroundContainer,
 } from "../../ui/container.styled";
+import { handleLoginPostRequest } from "../../utils/fetchPostRequest";
 
 const init = {
   email: "",
@@ -49,11 +50,15 @@ function AdminLogin() {
     if (hasError) {
       alert("[ERROR]" + " Please, fill all the input field");
     } else {
-      alert("[SUCCESS]" + " User created successfully");
+      handleLoginPostRequest(
+        "/api/admin/login",
+        state.email.value.toString(),
+        state.password.value.toString()
+      );
+      clear();
     }
   };
 
-  console.log(state);
   return (
     <FormBackgroundContainer>
       <FlexContainer>
@@ -86,10 +91,7 @@ function AdminLogin() {
             />
 
             <ButtonFlexContainer>
-              <Button type="submit" onClick={clear}>
-                {" "}
-                Submit{" "}
-              </Button>
+              <Button type="submit"> Submit </Button>
 
               <P>
                 Log as <NavLink to="/login">User</NavLink>

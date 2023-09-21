@@ -85,31 +85,32 @@ const adminLogin = async (req, res) => {
 
     const { email, password } = req.body;
 
+    console.log(email, password);
     //if any field is empty, return error:
     if (!email || !password) {
-        errorResponse(res, {
+        return errorResponse(res, {
             statusCode: 400,
             message: 'Please, fill the data'
         })
     }
 
     //if not, check if the user is exist or not:
-    const hasUser = await Admin.findOne({ email: email });
+    const hasUser = await Admin.findOne({ email: email.trim() });
 
     //if not, return error:
     if (!hasUser) {
-        errorResponse(res, {
+        return errorResponse(res, {
             statusCode: 400,
             message: "Admin is not valid"
         })
     }
 
     //if exist, check if the password is correct or not:
-    const isMatch = await bcrypt.compare(password, hasUser.password);
+    const isMatch = await bcrypt.compare(password.trim(), hasUser.password);
 
     //if not match, return error:
     if (!isMatch) {
-        errorResponse(res, {
+        return errorResponse(res, {
             statusCode: 400,
             message: 'Invalid Credentials'
         })

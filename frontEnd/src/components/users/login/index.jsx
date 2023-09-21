@@ -13,7 +13,7 @@ import {
   ButtonFlexContainer,
   FormBackgroundContainer,
 } from "../../ui/container.styled";
-import handlePostRequest from "../../utils/fetchPostRequest";
+import { handleLoginPostRequest } from "../../utils/fetchPostRequest";
 
 const init = {
   email: "",
@@ -50,8 +50,12 @@ function Login() {
     if (hasError) {
       alert("[ERROR]" + " Please, fill all the input field");
     } else {
-      handlePostRequest(state.email.value, state.password.value);
-      // alert("[SUCCESS]" + " User created successfully");
+      handleLoginPostRequest(
+        "/api/users/login",
+        state.email.value.toString(),
+        state.password.value.toString()
+      );
+      clear();
     }
   };
 

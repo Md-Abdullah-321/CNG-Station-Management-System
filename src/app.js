@@ -39,8 +39,16 @@ app.use(rateLimiter);
 //4. Cookie-parser  - handle cookies:
 app.use(cookieParser());
 //5. cors:
-app.use(cors());
+// app.use(cors());
 
+
+
+
+//User router:
+app.use('/api/users', userRouter);
+
+//admin Router:
+app.use('/api/admin', adminRouter);
 
 
 //serve Client:
@@ -54,15 +62,6 @@ app.get("*", (req, res) => {
         }
     )
 })
-
-
-
-//User router:
-app.use('/api/users', userRouter);
-
-//admin Router:
-app.use('/api/admin', adminRouter);
-
 
 //client error handling:
 app.use((req, res, next) => {

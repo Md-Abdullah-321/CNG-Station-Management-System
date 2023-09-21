@@ -67,9 +67,6 @@ const createUser = async(req, res, next) => {
 const userLogin = async(req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(req.headers);
-        console.log(typeof password);
-         console.log(typeof email);
 
         if(!email || !password){
             errorResponse(res, {
@@ -79,7 +76,7 @@ const userLogin = async(req, res, next) => {
         }
         
         const hasUser = await User.findOne({ email: email });
-        console.log(hasUser.password);
+        console.log(hasUser);
         if (hasUser) {
             if (hasUser.accountType === 'pending' || hasUser.accountType === 'banned') {
                 errorResponse(res, {
@@ -87,8 +84,7 @@ const userLogin = async(req, res, next) => {
                     message: "User not valid. Please, contact to admin"
                 })
             } else {
-                const isMatch = await bcrypt.compare( password,hasUser.password );
-                console.log(isMatch);
+                const isMatch = await bcrypt.compare( password.trim(), hasUser.password );
                 if(!isMatch){
                     errorResponse(res, {
                         statusCode: 400,
