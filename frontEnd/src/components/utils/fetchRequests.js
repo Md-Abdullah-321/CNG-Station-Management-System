@@ -29,4 +29,9 @@ export const handleLoginPostRequest = async (url,email, password) => {
   }
 };
 
+//GET: fetch current serial ->
+export const getContent = async (url) => {
+ 
+}
+
 

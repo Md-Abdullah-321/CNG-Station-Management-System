@@ -30,7 +30,7 @@ userRouter.post('/serial', requestForSerial);
 userRouter.get('/logout', userLogout);
 
 //GET: User serial history:
-userRouter.get('/history', getSerialHistory);
+userRouter.get('/userHistory', getSerialHistory);
 
 //GET: All serial History: 
 userRouter.get('/serialHistory', getAllSerialHistory);

@@ -97,7 +97,7 @@ const userLogin = async(req, res, next) => {
                 res.cookie("jwtoken", token, {
                     expires: new Date(Date.now() + 25892000000),
                     httpOnly: true
-                }); 
+                });
                 successResponse(res, {
                     statusCode: 200,
                     message: 'Login successful',
@@ -235,8 +235,8 @@ const requestForSerial = async (req, res, next) => {
 //GET: User serial history:
 const getSerialHistory = async(req, res, next) => {
     try {
-        const { token } = req.headers;
-
+        const token = req.cookies.jwtoken;
+        
         if (!token) {
             errorResponse(res, {
                 statusCode: 401,

@@ -71,3 +71,13 @@ export const P = styled.p`
     font-size: 14px;
     margin-right: 17px;
 `
+
+
+//make hamburger button:
+export const Line = styled.div`
+    width: 15px;
+    height: 2px;
+    background-color: #C8E4B2;
+    font-weight: 700;
+`
+

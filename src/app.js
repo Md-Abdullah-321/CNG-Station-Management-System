@@ -39,7 +39,7 @@ app.use(rateLimiter);
 //4. Cookie-parser  - handle cookies:
 app.use(cookieParser());
 //5. cors:
-// app.use(cors());
+app.use(cors());
 
 
 

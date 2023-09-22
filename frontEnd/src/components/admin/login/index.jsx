@@ -13,7 +13,7 @@ import {
   ButtonFlexContainer,
   FormBackgroundContainer,
 } from "../../ui/container.styled";
-import { handleLoginPostRequest } from "../../utils/fetchPostRequest";
+import { handleLoginPostRequest } from "../../utils/fetchRequests";
 
 const init = {
   email: "",
