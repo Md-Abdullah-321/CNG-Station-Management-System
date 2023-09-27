@@ -21,11 +21,11 @@ export const handleLoginPostRequest = async (url,email, password) => {
 
     // Handle the successful response here
     if (data) {
-      alert(data.message);
+      return {error: false, message: data.message}
     }
   } catch (error) {
     // Handle errors here
-    console.error('Fetch error:', error);
+     return {error: true, message: error.message}
   }
 };
 

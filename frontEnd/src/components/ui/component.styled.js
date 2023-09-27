@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from "styled-components";
 
 export const FlexContainer = styled.div`
@@ -58,8 +59,10 @@ export const Button = styled.button`
     background-color: #C8E4B2;
     color: #406343;
     border: none;
-    padding: 5px 15px;
-    border-radius: 5px;
+    padding: ${props => props.padding || "5px 15px"};
+    margin: ${props => props.margin || "0px"};
+    border-radius: ${props => props.radius || "5px"};;
+    cursor: pointer;
     font-weight: 600;
 `
 
@@ -80,4 +83,37 @@ export const Line = styled.div`
     background-color: #C8E4B2;
     font-weight: 700;
 `
+
+export const Ul = styled.ul`
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    position: relative;
+    top: 70px;
+    left: 10px;
+    gap: 0.5rem;
+`
+export const Li = styled.li`
+    background-color: #79AC78;
+    width: 80%;
+    padding: 4px 10px;
+    border-radius: 3px;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+         background-color: #C8E4B2;
+    };
+`
+
+export const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: #fff;
+  ${Li}:hover & {
+        color: #406343;
+    }
+`;
+
+
+
+
 

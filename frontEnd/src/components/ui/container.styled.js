@@ -21,6 +21,10 @@ export const LeftContainer = styled.div`
     width: 20vw;
     height: 100vh;
     background-color: #FAF1E4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
 `
 
 export const RightContainer = styled.div`
@@ -40,4 +44,7 @@ export const LineContainer = styled.div`
     border-radius: 3px;
     transition: 0.5s;
     cursor: pointer;
+`
+export const PageContainer = styled.div`
+    padding: 50px;
 `

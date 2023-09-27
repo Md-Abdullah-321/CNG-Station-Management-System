@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
-import { Line } from "../../ui/component.styled";
-import {
-  DashboardContainer,
-  LeftContainer,
-  LineContainer,
-  RightContainer,
-} from "../../ui/container.styled";
+import { useEffect } from "react";
+import CreatePage from "../../shared/CreatePage";
+import { PageContainer } from "../../ui/container.styled";
 
-function Dashboard() {
-  const [currentSerialHistory, setCurrentSerialHistory] = useState([]);
-  const [navbar, setNavbar] = useState(false);
-
+const DashboardPage = () => {
   //GET: get serial history;
   const fetchData = async () => {
     try {
@@ -30,26 +22,20 @@ function Dashboard() {
       console.log(error);
     }
   };
-  const handleNavbar = () => {
-    setNavbar(!navbar);
-  };
 
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
-    <DashboardContainer>
-      {/* {hamburger button } */}
-      <LineContainer onClick={handleNavbar}>
-        <Line /> <Line /> <Line />
-      </LineContainer>
-
-      {/* Navbar  */}
-      {navbar && <LeftContainer></LeftContainer>}
-
-      <RightContainer width={navbar}></RightContainer>
-    </DashboardContainer>
+    <PageContainer>
+      <h1>Hello World!</h1>
+    </PageContainer>
   );
+};
+
+function Dashboard() {
+  return <CreatePage Page={<DashboardPage />} />;
 }
 
 export default Dashboard;

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import InputGroup from "../../shared/inputGroup";
 import {
@@ -37,6 +37,7 @@ const validate = (values) => {
 };
 
 function Login() {
+  const navigate = useNavigate();
   const {
     formState: state,
     handleBlur,
@@ -46,15 +47,22 @@ function Login() {
     clear,
   } = useForm({ init, validate });
 
-  const cb = ({ hasError, values, errors }) => {
+  const cb = async ({ hasError, values, errors }) => {
     if (hasError) {
       alert("[ERROR]" + " Please, fill all the input field");
     } else {
-      handleLoginPostRequest(
+      const { error, message } = await handleLoginPostRequest(
         "/api/users/login",
         state.email.value.toString(),
         state.password.value.toString()
       );
+
+      if (error) {
+        alert("Login failed, try again!");
+      } else {
+        alert(message);
+        navigate("/");
+      }
       clear();
     }
   };
