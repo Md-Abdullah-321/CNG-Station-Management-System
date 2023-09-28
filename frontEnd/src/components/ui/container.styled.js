@@ -48,3 +48,36 @@ export const LineContainer = styled.div`
 export const PageContainer = styled.div`
     padding: 50px;
 `
+
+export const ProfileContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 85vh;
+`
+
+export const ProfileContentContainer = styled.div`
+    background-color: #435334;
+    color: #fff;
+    width: 80%;
+    height: 70%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 50px;
+    opacity: 0.5;
+`
+export const CenterElementContainer = styled.div`
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+`
+
+export const ProfileDescriptionContainer = styled.div`
+    width: 80%;
+    height: 60%;
+    padding: 10px;
+    margin: 30px auto 0 auto;
+    line-height: 1.5rem;
+`

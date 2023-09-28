@@ -47,7 +47,8 @@ export const TextInput = styled.input`
 export const Heading = styled.h2`
     text-align: center;
     color: #406343;
-    margin: 10px 0px;
+    color: ${props => props.color || "#406343"};
+    margin: ${props => props.margin || "10px 0px"};;
 `
 
 export const Label = styled.label`
@@ -90,7 +91,7 @@ export const Ul = styled.ul`
     list-style-type: none;
     position: relative;
     top: 70px;
-    left: 10px;
+    left: 20px;
     gap: 0.5rem;
 `
 export const Li = styled.li`
@@ -112,6 +113,16 @@ export const StyledNavLink = styled(NavLink)`
         color: #406343;
     }
 `;
+
+export const Image = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+`
+
+export const Span = styled.span`
+    font-weight: 500;
+`
 
 
 

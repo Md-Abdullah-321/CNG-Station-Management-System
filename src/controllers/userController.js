@@ -114,14 +114,16 @@ const userLogin = async(req, res, next) => {
 
 //GET: get own profile:
 const getUserProfile = async(req, res, next) => {
-    const { token } = req.headers;
+    const token = req.cookies.jwtoken;
+
     const decoded = jwt.verify(token, jwtActivationKey);
     
     //get user by email:
     const user = await User.findOne({ email: decoded.email });
-
+    
     successResponse(res, {
         statusCode: 201,
+        message: "Profile genareted successfully",
         payload: user
     })
 }

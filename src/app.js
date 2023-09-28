@@ -24,7 +24,7 @@ const path = require('path');
 const app = express();
 const rateLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 Minute
-    max: 5, //user can req to a route max 5 times 
+    max: 10, //user can req to a route max 5 times 
     message: 'Too many requests from this IP, please try again later'
 })
 

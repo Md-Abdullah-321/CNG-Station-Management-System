@@ -31,7 +31,24 @@ export const handleLoginPostRequest = async (url,email, password) => {
 
 //GET: fetch current serial ->
 export const getContent = async (url) => {
- 
+ try {
+   const res = await fetch(url, {
+    method: 'GET',
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+   const data = await res.json();
+   
+ if (data) {
+      return {error: false, message: data.message, data: data.payload}
+    }
+  } catch (error) {
+    // Handle errors here
+     return {error: true, message: error.message, data: data.payload}
+  }
 }
 
 

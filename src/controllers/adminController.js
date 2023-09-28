@@ -85,7 +85,6 @@ const adminLogin = async (req, res) => {
 
     const { email, password } = req.body;
 
-    console.log(email, password);
     //if any field is empty, return error:
     if (!email || !password) {
         return errorResponse(res, {
@@ -135,7 +134,6 @@ const adminLogin = async (req, res) => {
 const approveUser = async (req, res,next) => {
     const {id} = req.params;
 
-    console.log(id);
     try {
         //check if any user exist with this id or not:
         const user = await User.findById(id);
