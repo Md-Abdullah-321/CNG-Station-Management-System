@@ -81,3 +81,7 @@ export const ProfileDescriptionContainer = styled.div`
     margin: 30px auto 0 auto;
     line-height: 1.5rem;
 `
+export const SerialHistoryContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+`

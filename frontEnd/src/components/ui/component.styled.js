@@ -124,6 +124,25 @@ export const Span = styled.span`
     font-weight: 500;
 `
 
+export const SerialComponent = styled.div`
+    background-color: rgb(67, 83, 52);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 10px 0 10px;
+    color: #fff;
+`
+
+export const SerialDate = styled.h5`
+    margin: 25px 0px 10px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 400;
+    background: #FAF1E4;
+    padding: 3px 5px;
+    border-radius: 20px;
+    text-align: center;
+`
+
 
 
 
