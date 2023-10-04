@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import getTimeIn12HourFormat from "../../shared/ConvertTime";
 import CreatePage from "../../shared/CreatePage";
 import { SerialComponent, SerialDate, Span } from "../../ui/component.styled";
 import {
@@ -56,7 +57,7 @@ const SerialHistoryPage = () => {
                 </p>
                 <p>
                   <Span>Serial Time: </Span>
-                  {serial.serial_time}
+                  {getTimeIn12HourFormat(serial.serial_time)}
                 </p>
                 <p>
                   <Span>Serial Status: </Span>

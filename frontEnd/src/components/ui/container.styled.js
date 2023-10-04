@@ -51,8 +51,8 @@ export const PageContainer = styled.div`
 
 export const ProfileContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: ${props => props.justify || "center"};
+    align-items: ${props => props.items || "center"};
     flex-direction: column;
     width: 100%;
     height: 85vh;
@@ -61,11 +61,11 @@ export const ProfileContainer = styled.div`
 export const ProfileContentContainer = styled.div`
     background-color: #435334;
     color: #fff;
-    width: 80%;
-    height: 70%;
+    width: ${props => props.width || "80%"};
+    height: ${props => props.height || "70%"};
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    padding: 50px;
+    padding: ${props => props.padding || "50px"};
     opacity: 0.5;
 `
 export const CenterElementContainer = styled.div`
@@ -84,4 +84,29 @@ export const ProfileDescriptionContainer = styled.div`
 export const SerialHistoryContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+`
+
+export const FlexColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    height: 80%;
+    gap: 10px;
+`
+
+export const SerialContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    color: #fff;
+`
+
+export const Serial = styled.div`
+    background-color: #435334;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `

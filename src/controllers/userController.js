@@ -131,8 +131,10 @@ const getUserProfile = async(req, res, next) => {
 
 //POST: request for a serial
 const requestForSerial = async (req, res, next) => {
-    const { token } = req.headers;
+     const token = req.cookies.jwtoken;
     const { origin, destination } = req.body;
+
+    console.log(origin, destination);
     const decoded = jwt.verify(token, jwtActivationKey);
 
     //get user by email:
@@ -309,6 +311,51 @@ const getAllSerialHistory = async(req, res, next) => {
     })
 }
 
+//GET: check last serial type:
+const getSerialType = async (req, res, next) => {
+    const token = req.cookies.jwtoken;
+    const decoded = jwt.verify(token, jwtActivationKey);
+
+    //get user by email:
+    const user = await User.findOne({ email: decoded.email });
+
+    //get toady's date:
+    let date = new Date().toLocaleDateString();
+
+    //separate serial from user:
+    let serial = user.serial;
+
+    // check if the serial array empty or not:
+    if (serial.length > 0) {
+        let lastSerial = serial[serial.length - 1];
+
+        //check if the date is today's or not:
+        if (lastSerial[date]) {
+            let lastItem = Object.keys(Object.values(lastSerial)[0]);
+
+            
+            if (lastSerial[date][parseInt(lastItem[lastItem.length - 1])].serial_status === 'pending' || lastSerial[date][parseInt(lastItem[lastItem.length - 1])].serial_status === 'in-progress') {
+                successResponse(res, {
+                    statusCode: 200,
+                    message: true
+                })
+            } else {
+                successResponse(res, {
+                    statusCode: 200,
+                    message: false
+                })
+            }
+            
+        } else {
+             successResponse(res, {
+                    statusCode: 200,
+                    message: false
+                })
+        }
+    } 
+   
+}
+
 
 //GET:logout user:
 const userLogout = (res, req, next) => {
@@ -329,5 +376,6 @@ module.exports = {
     userLogin,
     userLogout,
     getSerialHistory,
-    getAllSerialHistory
+    getAllSerialHistory,
+    getSerialType
 }

@@ -9,7 +9,7 @@
 
 //Dependencies:
 const express = require('express');
-const { createUser, getUserProfile, requestForSerial, userLogin, userLogout, getSerialHistory, getAllSerialHistory } = require('../controllers/userController');
+const { createUser, getUserProfile, requestForSerial, userLogin, userLogout, getSerialHistory, getAllSerialHistory, getSerialType } = require('../controllers/userController');
 const upload = require('../middlewares/uploadFile');
 const userRouter = express.Router();
 
@@ -34,6 +34,9 @@ userRouter.get('/userHistory', getSerialHistory);
 
 //GET: All serial History: 
 userRouter.get('/serialHistory', getAllSerialHistory);
+
+//GET: check user last serial type:
+userRouter.get('/serialType', getSerialType);
 
 
 

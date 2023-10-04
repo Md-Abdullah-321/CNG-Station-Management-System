@@ -23,6 +23,10 @@ export const FormContainer = styled.div`
 export const Form = styled.form`
     width: 100%;
     height: 100%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
 `;
 
 export const Container = styled.div`
@@ -45,10 +49,11 @@ export const TextInput = styled.input`
 `;
 
 export const Heading = styled.h2`
-    text-align: center;
-    color: #406343;
+    text-align: ${props => props.text || "center"};
     color: ${props => props.color || "#406343"};
-    margin: ${props => props.margin || "10px 0px"};;
+    margin: ${props => props.margin || "10px 0px"};
+    font-size:${props => props.font || "24px"};
+    font-weight:${props => props.fontWeight || ""};
 `
 
 export const Label = styled.label`
@@ -72,8 +77,9 @@ export const InputFile = styled.input`
 `
 
 export const P = styled.p`
-    font-size: 14px;
-    margin-right: 17px;
+    font-size:${props => props.font || "14px"};
+    margin: ${props => props.margin || "0px 17px 0px 0px"};
+    color:  ${props => props.color || ""};
 `
 
 
@@ -141,6 +147,16 @@ export const SerialDate = styled.h5`
     padding: 3px 5px;
     border-radius: 20px;
     text-align: center;
+`
+
+
+export const Select = styled.select`
+        width: 90%;
+    padding: 3px 5px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 400;
+    outline: none;
 `
 
 
